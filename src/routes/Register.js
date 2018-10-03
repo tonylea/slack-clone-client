@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Header, Input, Button } from 'semantic-ui-react';
-import { gql, graphql } from 'react-apollo';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 
-const registerUserMutation = gql`
+const REGISTER_USER_MUTATION = gql`
   mutation($username: String!, $email: String!, $password: String!) {
     registerUser(username: $username, email: $email, password: $password)
   }
@@ -28,34 +29,37 @@ class Register extends Component {
     const { username, email, password } = this.state;
 
     return (
-      <Mutation mutation={registerUserMutation}>
-        <Container text>
-          <Header as="h2">Register</Header>
-          <Input
-            name="username"
-            onChange={this.onChange}
-            value={username}
-            placeholder="username"
-            fluid
-          />
-          <Input
-            name="email"
-            onChange={this.onChange}
-            value={email}
-            placeholder="email"
-            fluid
-          />
-          <Input
-            name="password"
-            onChange={this.onChange}
-            value={password}
-            placeholder="password"
-            fluid
-            type="password"
-          />
-          <Button onClick={this.onClick}>Submit</Button>
-        </Container>
-      </Mutation>
+      <Container text>
+        <Header as="h2">Register</Header>
+        <Input
+          name="username"
+          onChange={this.onChange}
+          value={username}
+          placeholder="username"
+          fluid
+        />
+        <Input
+          name="email"
+          onChange={this.onChange}
+          value={email}
+          placeholder="email"
+          fluid
+        />
+        <Input
+          name="password"
+          onChange={this.onChange}
+          value={password}
+          placeholder="password"
+          fluid
+          type="password"
+        />
+        <Mutation
+          mutation={REGISTER_USER_MUTATION}
+          variables={{ username, email, password }}
+        >
+          {postMutation => <Button onClick={postMutation}>Submit</Button>}
+        </Mutation>
+      </Container>
     );
   }
 }
