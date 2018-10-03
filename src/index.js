@@ -1,26 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import Routes from './routes';
-import * as serviceWorker from './serviceWorker';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 const client = new ApolloClient({
-  uri: process.env.GRAPHQL_URI
+  // uri: process.env.GRAPHQL_URI
+  uri: 'http://localhost:4000/graphql'
 });
 
-const App = (
+const App = () => (
   <ApolloProvider client={client}>
     <Routes />
   </ApolloProvider>
 );
 
-ReactDOM.render(App, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+render(<App />, document.getElementById('root'));
